@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Interactive Dashboard</title>
+  <style>
+    /* General Styles */
+    body {
+      font-family: 'Arial', sans-serif;
+      margin: 0;
+      padding: 0;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: linear-gradient(135deg, #1a1a1a 0%, #333333 100%);
+      color: #fff;
+      overflow-y: auto;
+    }
+
+    .dashboard {
+      display: flex;
+      width: 90%;
+      max-width: 1200px;
+      height: 80vh;
+      background: rgba(255, 255, 255, 0.08);
+      backdrop-filter: blur(20px);
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Sidebar */
+    .sidebar {
+      background: rgba(0, 0, 0, 0.3);
+      width: 120px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      padding: 20px 0;
+      gap: 20px;
+    }
+
+    .sidebar img {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      border: 2px solid #fff;
+    }
+
+    .icon {
+      background: transparent;
+      border: none;
+      font-size: 24px;
+      color: #fff;
+      padding: 10px;
+      cursor: pointer;
+      border-radius: 50%;
+      transition: background 0.3s ease;
+    }
+
+    .icon.active, .icon:hover {
+      background: rgba(255, 255, 255, 0.2);
+    }
+
+    /* Main Content */
+    .main-content {
+      flex: 1;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      overflow-y: auto;
+    }
+
+    .top-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .search {
+      padding: 10px;
+      border: none;
+      border-radius: 20px;
+      flex: 1;
+      margin-right: 20px;
+      outline: none;
+      color: #fff;
+      background: #2a2a2a;
+      border: 1px solid #444;
+    }
+
+    .profile {
+      font-size: 24px;
+    }
+
+    .bottom-panel {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 20px;
+    }
+
+    .stat-card {
+      background: rgba(255, 255, 255, 0.08);
+      flex: 1;
+      margin: 0 10px;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+      text-align: center;
+      color: #fff;
+      border: 1px solid #444;
+    }
+
+  /* General Styles - Same as Above */
+
+  /* Responsive Styles */
+  @media (max-width: 768px) {
+    .dashboard {
+      flex-direction: column;
+      width: 100%;
+      height: auto;
+      margin: 0;
+      padding: 0;
+      border-radius: 10px;
+    }
+
+    .sidebar {
+      flex-direction: row;
+      width: 100%;
+      height: auto;
+      padding: 10px 0;
+      justify-content: space-around;
+      gap: 10px;
+    }
+
+    .sidebar img {
+      width: 50px; /* Smaller logo */
+      height: 50px;
+    }
+
+    .icon {
+      font-size: 20px;
+      padding: 8px;
+    }
+
+    .main-content {
+      padding: 10px;
+      width: 100%;
+    }
+
+    .top-bar {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 10px;
+    }
+
+    .search {
+      width: 100%;
+      margin-right: 0;
+    }
+
+    .profile {
+      align-self: flex-end;
+    }
+
+    .model-viewer {
+      margin-top: 10px;
+    }
+
+    .bottom-panel {
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .stat-card {
+      margin: 10px 0;
+      padding: 15px;
+      font-size: 14px;
+    }
+
+    .stat-card span {
+      font-size: 16px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .sidebar {
+      gap: 5px;
+    }
+
+    .sidebar img {
+      width: 40px;
+      height: 40px;
+    }
+
+    .icon {
+      font-size: 18px;
+      padding: 6px;
+    }
+
+    .main-content {
+      padding: 5px;
+    }
+
+    .search {
+      font-size: 14px;
+      padding: 8px;
+    }
+
+    .stat-card {
+      font-size: 12px;
+      padding: 10px;
+    }
+
+    .stat-card span {
+      font-size: 14px;
+    }
+  }
+
+  </style>
+</head>
+<body>
+  <div class="dashboard">
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <img src="wheelcare.jpg" alt="WheelCare Logo">
+      <button class="icon active" onclick="navigateTo('index.html')">🏠</button>
+      <button class="icon" onclick="navigateTo('heart.html')">❤️</button>
+      <button class="icon" onclick="navigateTo('temp.html')">🧠</button>
+      <button class="icon" onclick="navigateTo('reminder.html')">⚙️</button>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+      <header class="top-bar">
+        <input type="text" class="search" placeholder="Search..." onkeydown="handleSearch(event)">
+        <div class="profile">👤</div>
+      </header>
+
+      <div class="model-viewer">
+        <h2>Welcome to WheelCare</h2>
+      
+        <div class="bottom-panel">
+          <div class="stat-card">🩺 Heart Rate: <span id="heartRate">Loading...</span></div>
+          <div class="stat-card" id="medications">💊 Medications: <span>Loading...</span></div>
+          <div class="stat-card">🩸 Temperature: <span>92</span></div>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+  <script>
+// Fetch heart rate dynamically
+function fetchHeartRate() {
+    // Simulate fetching heart rate from an API or device
+    const simulatedHeartRate = Math.floor(Math.random() * (100 - 60 + 1)) + 60; // Random between 60-100
+    document.getElementById("heartRate").textContent = `${simulatedHeartRate} BPM`;
+
+    // Call this function every 5 seconds to update
+    setTimeout(fetchHeartRate, 5000);
+  }
+
+  // Fetch medicine details from localStorage
+  function fetchMedicineDetails() {
+    const medicationsData = localStorage.getItem("medications");
+    const medicationsList = medicationsData
+      ? JSON.parse(medicationsData)
+      : ["No medications available"]; // Default if nothing is stored
+
+    const medicationsElement = document.getElementById("medications");
+    medicationsElement.innerHTML = `💊 Medications: <ul>${medicationsList
+      .map((med) => `<li>${med}</li>`)
+      .join("")}</ul>`;
+  }
+
+  // Save sample medications (for testing)
+  function saveSampleMedications() {
+    const sampleMedications = ["Aspirin - 10 AM", "Vitamin D - 8 PM"];
+    localStorage.setItem("medications", JSON.stringify(sampleMedications));
+  }
+
+  // Call functions on page load
+  document.addEventListener("DOMContentLoaded", () => {
+    saveSampleMedications(); // Uncomment if you need to add sample data
+    fetchHeartRate();
+    fetchMedicineDetails();
+  });
+
+    function navigateTo(page) {
+      window.location.href = page;
+    }
+
+    function handleSearch(event) {
+      if (event.key === 'Enter') {
+        const query = event.target.value.toLowerCase();
+        const pages = {
+          "home": "index.html",
+          "heart": "heart.html",
+          "temperature": "temp.html",
+          "settings": "reminder.html"
+        };
+        const targetPage = pages[query];
+        if (targetPage) {
+          navigateTo(targetPage);
+        } else {
+          alert("Page not found!");
+        }
+      }
+    }
+  </script>
+</body>
+</html>

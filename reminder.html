@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Medicine Reminder</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      margin: 0;
+      padding: 0;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: linear-gradient(135deg, #1a1a1a 0%, #333333 100%);
+      color: #fff;
+      overflow-y: auto;
+    }
+    .dashboard {
+      display: flex;
+      width: 90%;
+      max-width: 1200px;
+      height: 80vh;
+      background: rgba(255, 255, 255, 0.08);
+      backdrop-filter: blur(20px);
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    }
+    .sidebar {
+      background: rgba(0, 0, 0, 0.3);
+      width: 80px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-evenly;
+      padding: 20px 0;
+    }
+    .icon {
+      background: transparent;
+      border: none;
+      font-size: 24px;
+      color: #fff;
+      padding: 10px;
+      cursor: pointer;
+      border-radius: 50%;
+      transition: background 0.3s ease;
+    }
+    .icon.active, .icon:hover {
+      background: rgba(255, 255, 255, 0.2);
+    }
+    .container {
+      width: 50%;
+      background: linear-gradient(135deg, #1a1a1a 0%, #333333 100%);
+      backdrop-filter: blur(20px);
+      border-radius: 20px;
+      padding: 20px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+      margin-left: 250px;
+      margin-top: 50px;
+  
+
+    }
+    h1, h2 {
+      text-align: center;
+      margin-bottom: 20px;
+      color: #fff;
+    }
+    .form-group {
+      margin-bottom: 15px;
+    }
+    label {
+      display: block;
+      font-weight: bold;
+      margin-bottom: 5px;
+      color: #fff;
+    }
+    input {
+      width: 100%;
+      padding: 8px;
+      margin-bottom: 10px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+    button {
+      display: block;
+      width: 100%;
+      padding: 10px;
+      font-size: 16px;
+      color: #fff;
+      background-color: #7d5bf0;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #5a3db0;
+    }
+    .schedule-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(255, 255, 255, 0.1);
+      padding: 10px;
+      margin-bottom: 10px;
+      border-radius: 4px;
+    }
+    .schedule-item span {
+      flex: 1;
+      text-align: center;
+    }
+    .delete-btn {
+      background-color: #e74c3c;
+      color: white;
+      border: none;
+      padding: 5px 10px;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    .delete-btn:hover {
+      background-color: #c0392b;
+    }
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: 999;
+      display: none;
+    }
+    .modal {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: rgba(0, 0, 0, 0.9);
+      color: white;
+      width: 50%;
+      height: 50%;
+      padding: 20px;
+      border-radius: 8px;
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      z-index: 1000;
+    }
+    .modal.show, .modal-overlay.show {
+      display: block;
+    }
+    .modal button {
+      background: #e74c3c;
+      border: none;
+      color: white;
+      padding: 10px 20px;
+      border-radius: 4px;
+      margin-top: 20px;
+      cursor: pointer;
+    }
+    .modal button:hover {
+      background: #c0392b;
+    }@media (max-width: 768px) {
+    .dashboard {
+      flex-direction: column;
+      width: 100%;
+      height: auto;
+      padding: 0;
+    }
+
+    .sidebar {
+      flex-direction: row;
+      width: 100%;
+      height: auto;
+      padding: 10px 0;
+      justify-content: space-around;
+    }
+
+    .icon {
+      font-size: 20px;
+      padding: 8px;
+    }
+
+    .container {
+      width: 90%;
+      margin: 20px auto;
+      height: auto;
+      padding: 15px;
+    }
+
+    h1, h2 {
+      font-size: 18px;
+      margin-bottom: 15px;
+    }
+
+    .form-group label {
+      font-size: 14px;
+    }
+
+    input {
+      padding: 6px;
+      font-size: 14px;
+    }
+
+    button {
+      font-size: 14px;
+      padding: 8px;
+    }
+
+    .schedule-item {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 10px;
+    }
+
+    .schedule-item span {
+      text-align: left;
+    }
+
+    .delete-btn {
+      width: 100%;
+      text-align: center;
+      margin-top: 5px;
+    }
+
+    .modal {
+      width: 80%;
+      height: auto;
+      padding: 20px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .icon {
+      font-size: 18px;
+      padding: 6px;
+    }
+
+    .container {
+      width: 95%;
+      padding: 10px;
+    }
+
+    h1, h2 {
+      font-size: 16px;
+    }
+
+    input {
+      padding: 5px;
+      font-size: 12px;
+    }
+
+    button {
+      font-size: 12px;
+      padding: 6px;
+    }
+
+    .schedule-item span {
+      font-size: 12px;
+    }
+
+    .modal {
+      width: 90%;
+      height: auto;
+      padding: 15px;
+    }
+  }
+
+
+  </style>
+</head>
+<body>
+  <div class="dashboard">
+    <div class="sidebar">
+      <button class="icon active" onclick="navigateTo('index.html')">🏠</button>
+      <button class="icon" onclick="navigateTo('heart.html')">❤️</button>
+      <button class="icon" onclick="navigateTo('temp.html')">🧠</button>
+      <button class="icon" onclick="navigateTo('reminder.html')">⚙️</button>
+    </div>
+    <div class="container">
+      <h1>Medicine Reminder</h1>
+      <form id="medicineForm">
+        <div class="form-group">
+          <label for="medicineName">Medicine Name:</label>
+          <input type="text" id="medicineName" placeholder="Enter medicine name" required>
+        </div>
+        <div class="form-group">
+          <label for="medicineTime">Time (HH:MM):</label>
+          <input type="time" id="medicineTime" required>
+        </div>
+        <div class="form-group">
+          <label for="dosage">Dosage (Amt.):</label>
+          <input type="number" id="dosage" placeholder="Enter dosage (Amt.)" required>
+        </div>
+        <button type="submit">Add Reminder</button>
+      </form>
+      <h2>Scheduled Medicines</h2>
+      <div id="scheduleContainer"></div>
+      <div class="modal-overlay" id="modalOverlay"></div>
+      <div class="modal" id="reminderModal">
+        <h2>Medicine Reminder</h2>
+        <p id="modalMessage"></p>
+        <button onclick="closeModal()">Close</button>
+      </div>
+    </div>
+  </div>
+  <script>
+    const medicineForm = document.getElementById("medicineForm");
+    const scheduleContainer = document.getElementById("scheduleContainer");
+    const modal = document.getElementById("reminderModal");
+    const overlay = document.getElementById("modalOverlay");
+    const modalMessage = document.getElementById("modalMessage");
+    let schedules = [];
+
+    medicineForm.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const medicineName = document.getElementById("medicineName").value;
+      const medicineTime = document.getElementById("medicineTime").value;
+      const dosage = document.getElementById("dosage").value;
+
+      const schedule = { id: Date.now(), name: medicineName, time: medicineTime, dosage: `${dosage} mg` };
+      schedules.push(schedule);
+      displaySchedules();
+      setReminder(schedule);
+      medicineForm.reset();
+    });
+
+    function displaySchedules() {
+      scheduleContainer.innerHTML = schedules
+        .map(
+          (schedule) => `
+          <div class="schedule-item">
+            <span>${schedule.name}</span>
+            <span>${schedule.time}</span>
+            <span>${schedule.dosage}</span>
+            <button class="delete-btn" onclick="deleteSchedule(${schedule.id})">Delete</button>
+          </div>
+        `
+        )
+        .join("");
+    }
+
+    function deleteSchedule(id) {
+      schedules = schedules.filter((schedule) => schedule.id !== id);
+      displaySchedules();
+    }
+
+    function setReminder(schedule) {
+      const [hours, minutes] = schedule.time.split(":").map(Number);
+      const now = new Date();
+      const reminderTime = new Date();
+      reminderTime.setHours(hours, minutes, 0, 0);
+
+      if (reminderTime < now) reminderTime.setDate(now.getDate() + 1);
+
+      setTimeout(() => showModal(`Time to take your ${schedule.name} (${schedule.dosage}).`), reminderTime - now);
+    }
+
+    function showModal(message) {
+      modalMessage.textContent = message;
+      modal.classList.add("show");
+      overlay.classList.add("show");
+    }
+
+    function closeModal() {
+      modal.classList.remove("show");
+      overlay.classList.remove("show");
+    }
+
+    function navigateTo(page) {
+      window.location.href = page;
+    }
+  </script>
+</body>
+</html>
