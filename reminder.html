@@ -163,123 +163,27 @@
     }
     .modal button:hover {
       background: #c0392b;
-    }@media (max-width: 768px) {
-    .dashboard {
-      flex-direction: column;
-      width: 100%;
-      height: auto;
-      padding: 0;
     }
 
-    .sidebar {
-      flex-direction: row;
-      width: 100%;
-      height: auto;
-      padding: 10px 0;
-      justify-content: space-around;
+    @media (max-width: 768px) {
+      .container {
+        width: 80%;
+        max-width: 500px;
+        margin: auto;
+      }
     }
-
-    .icon {
-      font-size: 20px;
-      padding: 8px;
+    @media (max-width: 480px) {
+      .container {
+        width: 90%;
+        max-width: 400px;
+        margin: auto;
+      }
     }
-
-    .container {
-      width: 90%;
-      margin: 20px auto;
-      height: auto;
-      padding: 15px;
-    }
-
-    h1, h2 {
-      font-size: 18px;
-      margin-bottom: 15px;
-    }
-
-    .form-group label {
-      font-size: 14px;
-    }
-
-    input {
-      padding: 6px;
-      font-size: 14px;
-    }
-
-    button {
-      font-size: 14px;
-      padding: 8px;
-    }
-
-    .schedule-item {
-      flex-direction: column;
-      align-items: flex-start;
-      gap: 10px;
-    }
-
-    .schedule-item span {
-      text-align: left;
-    }
-
-    .delete-btn {
-      width: 100%;
-      text-align: center;
-      margin-top: 5px;
-    }
-
-    .modal {
-      width: 80%;
-      height: auto;
-      padding: 20px;
-    }
-  }
-
-  @media (max-width: 480px) {
-    .icon {
-      font-size: 18px;
-      padding: 6px;
-    }
-
-    .container {
-      width: 95%;
-      padding: 10px;
-    }
-
-    h1, h2 {
-      font-size: 16px;
-    }
-
-    input {
-      padding: 5px;
-      font-size: 12px;
-    }
-
-    button {
-      font-size: 12px;
-      padding: 6px;
-    }
-
-    .schedule-item span {
-      font-size: 12px;
-    }
-
-    .modal {
-      width: 90%;
-      height: auto;
-      padding: 15px;
-    }
-  }
-
-
   </style>
 </head>
 <body>
   <div class="dashboard">
-    <div class="sidebar">
-      <button class="icon active" onclick="navigateTo('index.html')">🏠</button>
-      <button class="icon" onclick="navigateTo('heart.html')">❤️</button>
-      <button class="icon" onclick="navigateTo('temp.html')">🧠</button>
-      <button class="icon" onclick="navigateTo('reminder.html')">⚙️</button>
-    </div>
+  >
     <div class="container">
       <h1>Medicine Reminder</h1>
       <form id="medicineForm">
